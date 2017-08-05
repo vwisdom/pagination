@@ -59,13 +59,13 @@
 				dom = '<div class="page-contain"><a href="javascript:void(0);" class="goPre"><</a><div class="page-box">'+a+'</div><a href="javascript:void(0);" class="goNext">></a></div>';
 			}
 			
-			
-			document.getElementById(_this.box).innerHTML=dom;
-			var contain = document.getElementsByClassName('page-contain')[0];
-			var box = document.getElementsByClassName('page-box')[0];
-			var next = document.getElementsByClassName('page-next')[0];
-			var goNext = document.getElementsByClassName('goNext')[0];
-			var goPre = document.getElementsByClassName('goPre')[0];
+			var id = document.getElementById(_this.box);
+			id.innerHTML=dom;
+			var contain = id.getElementsByClassName('page-contain')[0];
+			var box = id.getElementsByClassName('page-box')[0];
+			var next = id.getElementsByClassName('page-next')[0];
+			var goNext = id.getElementsByClassName('goNext')[0];
+			var goPre = id.getElementsByClassName('goPre')[0];
 			if(!_this.href){
 				box.addEventListener('click',function(e){
 					if(e.target.className&&e.target.className.indexOf('page-next')>-1){
