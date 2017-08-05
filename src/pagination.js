@@ -106,7 +106,10 @@
 				})
 				box.addEventListener('click',function(e){
 					if(e.target.nodeName=='A'){
-						this.className+=" active"; 
+						for(var i=0;i<box.childNodes.length;i++){
+							box.childNodes[i].className=box.childNodes[i].className.replace('active','');
+						}
+						e.target.className+=" active"; 
 						_this.callBack&&_this.callBack(e.target.innerHTML)
 					}
 				})

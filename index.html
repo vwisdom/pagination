@@ -6,19 +6,29 @@
 	<script src='src/pagination.js'></script>
 	<link rel="stylesheet" href="src/page.css">
 	<style>
+		.page{
+			width:1000px;
+			margin:0 auto;
+			overflow: hidden;
+		}
 		#d4,#d3{
 			height:400px;
 			width:500px;
 			float:left;
 			border:1px solid #efefef;
+			box-sizing:border-box;
 		}
 		h3{
 			text-align: center;
 		}
+		pre i{
+			color:#999;
+		}
 	</style>
 </head>
 <body>
-<div id='d3'>
+<div class='page'>
+	<div id='d3'>
 <h3>a 链接跳转实现分页效果</h3>
 	<pre>
 		page({
@@ -53,6 +63,24 @@
 	</pre>
 	<div id='d2'></div>
 </div>
+</div>
+<div style='width:1000px;margin:10px auto'>
+	<h2>可根据您的需求自定义样式：</h2>
+	我们的dom结构为<br>
+	<pre style='background:#000;color:#F92672;padding:10px;line-height:28px'>
+		div class='page-contain'<i>//最外层容器</i>
+			a href="" class='page-pre'>/a<i>//上箭头</i>
+			div class='page-box'><i>//页码器</i>
+				a href="">/a<i>//页码</i>
+				.......
+			/div
+			a href="" class='page-next'/a<i>//下箭头</i>
+		/div
+		<i>//根据上面的dom结构和class 我们很方便制定我需求的样式</i>
+		<i>//激活状态下我们对应的页码会添加active的class</i>
+	</pre>
+</div>
+
 <script>
 	page({
 		box:'d1',//存放分页的容器
@@ -82,6 +110,7 @@
 		num:8,//页面展示的页码个数
 		step:6,//每次更新页码个数
 		callBack:function(i){
+			console.log(i);
 			//点击页码的按钮发生回调函数一般都是操作ajax
 		}
 	})
