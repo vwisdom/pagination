@@ -20,6 +20,8 @@
 			this.page = config.page || 1;//当前页面
 			this.step = config.step ||3;//每次移动的步长
 			this.callBack = config.callBack;//通过ajax 异步执行回调方法
+			this.nextFun = config.next;//下一页的回调
+			this.preFun = config.pre;//上一页的回调
 			this.create();
 		},
 		create:function(){
@@ -57,6 +59,7 @@
 					}	
 				}
 				dom = '<div class="page-contain"><a href="javascript:void(0);" class="goPre"><</a><div class="page-box">'+a+'</div><a href="javascript:void(0);" class="goNext">></a></div>';
+			console.log(dom)
 			}
 			
 			var id = document.getElementById(_this.box);
@@ -69,8 +72,7 @@
 			if(!_this.href){
 				box.addEventListener('click',function(e){
 					if(e.target.className&&e.target.className.indexOf('page-next')>-1){
-						_this.next(box);
-						
+						_this.next(box);	
 					}	
 				})
 				box.addEventListener('click',function(e){
@@ -79,26 +81,39 @@
 					}
 				})
 				goPre.addEventListener('click',function(){
-					for(var i=0;i<box.childNodes.length;i++){
+					for(var i=0,j;i<box.childNodes.length;i++){
 						if(box.childNodes[i].className.indexOf('active')>-1){
-							if(i==0){
-								_this.pre(box);
-							}else{
-								box.childNodes[i].className=box.childNodes[i].className.replace('active','');
-								box.childNodes[i-1].className+=" active";
-							}
-							
+							j=i;
 						}
 					}
+					if(box.childNodes[j].innerHTML==1)return;
+					if(_this.count<=_this.num){
+						if(j==0)return;
+						box.childNodes[i].className='';
+						box.childNodes[i-1].className+=" active";
+						return;
+					}
+					if(j==1){
+						_this.pre(box);
+					}else{
+						box.childNodes[j].className=box.childNodes[j].className.replace('active','');
+						box.childNodes[j-1].className+=" active";
+					}
+					
 				})
 				goNext.addEventListener('click',function(){
 					for(var i=0,j;i<box.childNodes.length;i++){
 						if(box.childNodes[i].className.indexOf('active')>-1){
+							if(box.childNodes[i].innerHTML==_this.count){return}
 							j=i+1;
 						}
-						box.childNodes[i].className='';
+						box.childNodes[i].className=box.childNodes[i].className.replace('active','');
 					}
-					if(j==box.childNodes.length){
+					if(_this.count<=_this.num){
+						box.childNodes[j].className='active';
+						return;
+					}
+					if(j==_this.num-1){
 						_this.next(box);
 					}else{
 						box.childNodes[j].className='active';
@@ -110,7 +125,7 @@
 							box.childNodes[i].className=box.childNodes[i].className.replace('active','');
 						}
 						e.target.className+=" active"; 
-						_this.callBack&&_this.callBack(e.target.innerHTML)
+						_this.callBack&&_this.callBack(Number(e.target.innerHTML));
 					}
 				})
 			}
@@ -120,41 +135,57 @@
 			var _this=this;
 			var n = box.childNodes[_this.num-1].innerHTML*1;
 			box.childNodes[_this.num-1].className = '';
+			if(n==_this.count){box.childNodes[_this.num-1].className = 'active';return;}
 			var s = _this.count-n-_this.step;
 			if(s>0){
 				for(var i=0;i<_this.step;i++){
 					box.removeChild(box.childNodes[0]);
-					box.childNodes[0].className='page-pre active';
+					box.childNodes[0].className='page-pre';
+					box.childNodes[_this.num-1-_this.step].className+=' active';
 					var dom = "<a href='javascript:void(0);' class="+(_this.step==(i+1)?'page-next':'')+">"+(1+i+n)+"</a>"
 					box.appendChild(returnDom(dom));
 				}
 			}else{
 				for(var i=0;i<_this.step+s;i++){
 					box.removeChild(box.childNodes[0]);
-					box.childNodes[0].className='page-pre active';
-					var dom = "<a href='javascript:void(0);' class="+((_this.step+s)==(i+1)?'page-next':'')+">"+(1+i+n)+"</a>";
+					box.childNodes[0].className+=' page-pre';
+					var dom = "<a href='javascript:void(0);' class="+((_this.step+s)==(i+1)&&((1+i+n)!=_this.count)?'page-next':'')+">"+(1+i+n)+"</a>";
 					box.appendChild(returnDom(dom));
 				}
+				box.childNodes[_this.num-_this.count+n-1].className+=' active';
 			}
 		},
 		pre:function(box){
 			var _this=this;
 			var n = box.childNodes[0].innerHTML*1;
-			box.childNodes[0].className='active';
+			console.log(n);
 			var s = n-_this.step;
 			if(s>0){
+				box.childNodes[0].className='';
+				box.childNodes[_this.num-_this.step-1].className='page-next';
+				console.log(22222)
 				for(var i=0;i<_this.step;i++){
 					box.removeChild(box.childNodes[ _this.num-1]);
-					box.childNodes[_this.num-2].className='page-next';
-					var dom = "<a href='javascript:void(0);' class="+(i==(_this.step-1)?'page-pre':'')+">"+(n-i-1)+"</a>";
-					box.insertBefore(returnDom(dom),box.childNodes[0]);
+					var dom = "<a href='javascript:void(0);' class="+(i==(_this.step-1)&&((n-i-1)!=1)?'page-pre':'')+">"+(n-i-1)+"</a>";
+					box.insertBefore(returnDom(dom),box.childNodes[0]);	
 				}
+				box.childNodes[_this.step].className+=' active';
 			}else{
-				var dom='';
-				for(var i=0;i<_this.num;i++){
-					dom+= "<a href='javascript:void(0);' class="+(i==(_this.num-1)?'page-next':'')+">"+(i+1)+"</a>";
+				console.log(n)
+				if(n==1){
+					box.childNodes[0].className='active';
+					box.childNodes[1].className='';
+					return;
 				}
-				box.innerHTML=dom;
+				for(var i=0;i<n-1;i++){
+					box.removeChild(box.childNodes[_this.num-1]);
+					var dom= "<a href='javascript:void(0);' >"+(i+1)+"</a>";
+					box.insertBefore(returnDom(dom),box.childNodes[i]);
+				}
+				box.childNodes[n].className='';
+				box.childNodes[_this.num-1].className='page-next';
+				box.childNodes[n-1].className='active';
+				console.log(box);
 			}
 		}
 	}

@@ -60,8 +60,12 @@
 				//点击页码的按钮发生回调函数一般都是操作ajax
 			}
 		})
+		<h4 style='text-align:center;margin:0'>注意：num 要比step要大于等于2
+		（例如:num：8；那么step只能小于等于6）</h4>
 	</pre>
 	<div id='d2'></div>
+	<div id='dd'></div>
+	<div id='dt'></div>
 </div>
 </div>
 <div style='width:1000px;margin:10px auto'>
@@ -106,9 +110,29 @@
 	})
 	page({
 		box:'d2',//存放分页的容器
-		count:32,//总页数
-		num:8,//页面展示的页码个数
+		count:20,//总页数
+		num:9,//页面展示的页码个数
 		step:6,//每次更新页码个数
+		callBack:function(i){
+			console.log(i);
+			//点击页码的按钮发生回调函数一般都是操作ajax
+		}
+	})
+	page({
+		box:'dd',//存放分页的容器
+		count:20,//总页数
+		num:6,//页面展示的页码个数
+		step:4,//每次更新页码个数
+		callBack:function(i){
+			console.log(i);
+			//点击页码的按钮发生回调函数一般都是操作ajax
+		}
+	})
+	page({
+		box:'dt',//存放分页的容器
+		count:22,//总页数
+		num:5,//页面展示的页码个数
+		step:3,//每次更新页码个数
 		callBack:function(i){
 			console.log(i);
 			//点击页码的按钮发生回调函数一般都是操作ajax
