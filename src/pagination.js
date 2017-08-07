@@ -36,7 +36,8 @@
 						}	
 					}else{
 						for(var i=n;i<this.count-this.page+1;i++){
-							a+= "<a href='"+this.href+(this.page+i)+"' class="+(i==this.count-this.page?'active':'')+">"+(this.page+i)+"</a>";
+							console.log(12313);
+							a+= "<a href='"+this.href+(this.page+i)+"' class="+(this.page+i==this.page?'active':'')+">"+(this.page+i)+"</a>";
 						}	
 					}	
 				}else{
@@ -59,7 +60,6 @@
 					}	
 				}
 				dom = '<div class="page-contain"><a href="javascript:void(0);" class="goPre"><</a><div class="page-box">'+a+'</div><a href="javascript:void(0);" class="goNext">></a></div>';
-			console.log(dom)
 			}
 			
 			var id = document.getElementById(_this.box);
