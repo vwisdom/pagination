@@ -142,6 +142,7 @@
 					box.removeChild(box.childNodes[0]);
 					box.childNodes[0].className='page-pre';
 					box.childNodes[_this.num-1-_this.step].className+=' active';
+					box.childNodes[_this.num-2-_this.step].className = box.childNodes[_this.num-2-_this.step].className.replace('active','');
 					var dom = "<a href='javascript:void(0);' class="+(_this.step==(i+1)?'page-next':'')+">"+(1+i+n)+"</a>"
 					box.appendChild(returnDom(dom));
 				}
