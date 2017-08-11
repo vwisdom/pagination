@@ -145,6 +145,7 @@
 					var dom = "<a href='javascript:void(0);' class="+(_this.step==(i+1)?'page-next':'')+">"+(1+i+n)+"</a>"
 					box.appendChild(returnDom(dom));
 				}
+				box.childNodes[_this.num-2-_this.step].className=box.childNodes[_this.num-2-_this.step].className.replace('active','');
 			}else{
 				for(var i=0;i<_this.step+s;i++){
 					box.removeChild(box.childNodes[0]);
@@ -170,6 +171,7 @@
 					box.insertBefore(returnDom(dom),box.childNodes[0]);	
 				}
 				box.childNodes[_this.step].className+=' active';
+				box.childNodes[_this.step+1].className = box.childNodes[_this.step+1].className.replace('active','');
 			}else{
 				console.log(n)
 				if(n==1){
