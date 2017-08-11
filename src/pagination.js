@@ -36,7 +36,8 @@
 						}	
 					}else{
 						for(var i=n;i<this.count-this.page+1;i++){
-							a+= "<a href='"+this.href+(this.page+i)+"' class="+(i==this.count-this.page?'active':'')+">"+(this.page+i)+"</a>";
+							console.log(12313);
+							a+= "<a href='"+this.href+(this.page+i)+"' class="+(this.page+i==this.page?'active':'')+">"+(this.page+i)+"</a>";
 						}	
 					}	
 				}else{
@@ -59,7 +60,6 @@
 					}	
 				}
 				dom = '<div class="page-contain"><a href="javascript:void(0);" class="goPre"><</a><div class="page-box">'+a+'</div><a href="javascript:void(0);" class="goNext">></a></div>';
-			console.log(dom)
 			}
 			
 			var id = document.getElementById(_this.box);
@@ -142,6 +142,7 @@
 					box.removeChild(box.childNodes[0]);
 					box.childNodes[0].className='page-pre';
 					box.childNodes[_this.num-1-_this.step].className+=' active';
+					box.childNodes[_this.num-2-_this.step].className = box.childNodes[_this.num-2-_this.step].className.replace('active','');
 					var dom = "<a href='javascript:void(0);' class="+(_this.step==(i+1)?'page-next':'')+">"+(1+i+n)+"</a>"
 					box.appendChild(returnDom(dom));
 				}
