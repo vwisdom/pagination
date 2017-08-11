@@ -98,6 +98,8 @@
 						box.childNodes[j].className=box.childNodes[j].className.replace('active','');
 						box.childNodes[j-1].className+=" active";
 					}
+					var n = box .getElementsByClassName('active')[0].innerHTML;
+					_this.preFun&&_this.preFun(Number(n));
 					
 				})
 				goNext.addEventListener('click',function(){
@@ -117,6 +119,8 @@
 					}else{
 						box.childNodes[j].className='active';
 					}
+					var n = box .getElementsByClassName('active')[0].innerHTML;
+					_this.nextFun&&_this.nextFun(Number(n));
 				})
 				box.addEventListener('click',function(e){
 					if(e.target.nodeName=='A'){
