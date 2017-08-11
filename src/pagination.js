@@ -36,7 +36,6 @@
 						}	
 					}else{
 						for(var i=n;i<this.count-this.page+1;i++){
-							console.log(12313);
 							a+= "<a href='"+this.href+(this.page+i)+"' class="+(this.page+i==this.page?'active':'')+">"+(this.page+i)+"</a>";
 						}	
 					}	
@@ -160,12 +159,10 @@
 		pre:function(box){
 			var _this=this;
 			var n = box.childNodes[0].innerHTML*1;
-			console.log(n);
 			var s = n-_this.step;
 			if(s>0){
 				box.childNodes[0].className='';
 				box.childNodes[_this.num-_this.step-1].className='page-next';
-				console.log(22222)
 				for(var i=0;i<_this.step;i++){
 					box.removeChild(box.childNodes[ _this.num-1]);
 					var dom = "<a href='javascript:void(0);' class="+(i==(_this.step-1)&&((n-i-1)!=1)?'page-pre':'')+">"+(n-i-1)+"</a>";
@@ -174,7 +171,6 @@
 				box.childNodes[_this.step].className+=' active';
 				box.childNodes[_this.step+1].className = box.childNodes[_this.step+1].className.replace('active','');
 			}else{
-				console.log(n)
 				if(n==1){
 					box.childNodes[0].className='active';
 					box.childNodes[1].className='';
@@ -188,7 +184,6 @@
 				box.childNodes[n].className='';
 				box.childNodes[_this.num-1].className='page-next';
 				box.childNodes[n-1].className='active';
-				console.log(box);
 			}
 		}
 	}
